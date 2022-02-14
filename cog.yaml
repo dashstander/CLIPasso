@@ -68,7 +68,7 @@ build:
     
     run:
         - "pip install git+https://github.com/openai/CLIP.git@main#egg=clip"
-        - "cd diffvg && python setup.py install"
+        - "pip install git+https://github.com/BachiLi/diffvg@master#egg=pydiffvg"
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
