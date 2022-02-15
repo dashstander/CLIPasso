@@ -93,7 +93,7 @@ class CLIPLoss(torch.nn.Module):
         self.device = args.device
         self.NUM_AUGS = args.num_aug_clip
         augemntations = []
-        if "affine" in args.augemntations:
+        if "affine" in args.augmentations:
             augemntations.append(transforms.RandomPerspective(
                 fill=0, p=1.0, distortion_scale=0.5))
             augemntations.append(transforms.RandomResizedCrop(
