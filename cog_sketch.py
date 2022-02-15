@@ -66,6 +66,7 @@ class PainterConfig:
     num_iter: int
     xdog_intersec: int = 1
     width: float = 1.0
+    save_interval: int = 50
     path_svg: str = 'none'
     saliency_model: str = 'clip'
     saliency_clip_model: str = 'ViT-B/32'
