@@ -72,5 +72,6 @@ build:
     run:
         - "git clone https://github.com/pixray/diffvg && cd diffvg && git submodule update --init --recursive && CMAKE_PREFIX_PATH=$(pyenv prefix) DIFFVG_CUDA=1 python setup.py install"
         - "pip install git+https://github.com/openai/CLIP.git@main#egg=clip"
+        - "python -c 'import torchvision; torchvision.models.vgg16(pretrained=True)'"
 # predict.py defines how predictions are run on your model
 predict: "cog_sketch.py:Predictor"

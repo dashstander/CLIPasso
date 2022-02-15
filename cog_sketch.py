@@ -40,11 +40,12 @@ class LossConfig:
     clip_fc_loss_weight: float = 0.1
     clip_text_guide: float = 0.0
     device: str = 'cuda:0'
-    clip_conv_layer_weights: str = "0,0,1.0,1.0,0"
+    clip_conv_layer_weights: str = '0,0,1.0,1.0,0'
     num_aug_clip: int = 4
     include_target_in_aug: int = 0
     augment_both: int = 1
     augmentations: str = 'affine'
+    clip_model_name: str = 'ViT-B/32'
 
 
 @dataclass
