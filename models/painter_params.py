@@ -30,7 +30,7 @@ class Painter(torch.nn.Module):
         self.control_points_per_seg = args.control_points_per_seg
         self.opacity_optim = args.force_sparse
         self.num_stages = args.num_stages
-        self.add_random_noise = "noise" in args.augemntations
+        self.add_random_noise = "noise" in args.augmentations
         self.noise_thresh = args.noise_thresh
         self.softmax_temp = args.softmax_temp
 
@@ -372,7 +372,7 @@ class Painter(torch.nn.Module):
         if epoch % self.args.save_interval == 0:
             self.add_random_noise = False
         else:
-            self.add_random_noise = "noise" in self.args.augemntations
+            self.add_random_noise = "noise" in self.args.augmentations
 
 class PainterOptimizer:
     def __init__(self, args, renderer):

@@ -111,8 +111,7 @@ def main(args):
                     configs_to_save[k].append(losses_dict_eval[k].item())
                 if args.clip_fc_loss_weight:
                     if losses_dict_eval["fc"].item() < best_fc_loss:
-                        best_fc_loss = losses_dict_eval["fc"].item(
-                        ) / args.clip_fc_loss_weight
+                        best_fc_loss = losses_dict_eval["fc"].item() / args.clip_fc_loss_weight
                         best_iter_fc = epoch
                 # print(
                 #     f"eval iter[{epoch}/{args.num_iter}] loss[{loss.item()}] time[{time.time() - start}]")
@@ -159,7 +158,6 @@ def main(args):
     path_svg = os.path.join(args.output_dir, "best_iter.svg")
     utils.log_sketch_summary_final(
         path_svg, args.use_wandb, args.device, best_iter, best_loss, "best total")
-
     return configs_to_save
 
 

@@ -90,7 +90,7 @@ def parse_arguments():
     parser.add_argument("--include_target_in_aug", type=int, default=0)
     parser.add_argument("--augment_both", type=int, default=1,
                         help="if you want to apply the affine augmentation to both the sketch and image")
-    parser.add_argument("--augemntations", type=str, default="affine",
+    parser.add_argument("--augmentations", type=str, default="affine",
                         help="can be any combination of: 'affine_noise_eraserchunks_eraser_press'")
     parser.add_argument("--noise_thresh", type=float, default=0.5)
     parser.add_argument("--aug_scale_min", type=float, default=0.7)
