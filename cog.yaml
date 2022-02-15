@@ -6,12 +6,15 @@ build:
     gpu: true
 
     cuda: "10.1"
-
+    system_packages:
+        - "libgl1-mesa-glx"
+        - "libglib2.0-0"
     # python version in the form '3.8' or '3.8.12'
     python_version: "3.8"
 
     # a list of packages in the format <package-name>==<version>
     python_packages:
+        - "cmake==3.21.2"
         - "ftfy==6.0.3"
         - "cssutils==2.3.0"
         - "gdown==4.2.0"
@@ -67,8 +70,7 @@ build:
         - "zipp==3.5.0"
     
     run:
+        - "git clone https://github.com/pixray/diffvg && cd diffvg && git submodule update --init --recursive && CMAKE_PREFIX_PATH=$(pyenv prefix) DIFFVG_CUDA=1 python setup.py install"
         - "pip install git+https://github.com/openai/CLIP.git@main#egg=clip"
-        - "pip install git+https://github.com/BachiLi/diffvg@master#egg=pydiffvg"
-
 # predict.py defines how predictions are run on your model
-predict: "predict.py:Predictor"
+predict: "cog_sketch.py:Predictor"
