@@ -201,11 +201,11 @@ class Predictor(cog.Predictor):
         type=int,
         default=16,
         help="number of strokes")
-    @cog.input(
-        "width",
-        type=float,
-        default=1.5,
-        help="stroke width")
+    # @cog.input(
+    #    "width",
+    #    type=float,
+    #    default=1.5,
+    #    help="stroke width")
     @cog.input("control_points_per_seg", type=int, default=4)
     @cog.input(
         "num_segments",
@@ -233,17 +233,17 @@ class Predictor(cog.Predictor):
     @cog.input("clip_weight", type=float, default=0)
     @cog.input("start_clip", type=int, default=0)
     @cog.input("num_aug_clip", type=int, default=4)
-    @cog.input("include_target_in_aug", type=int, default=0)
-    @cog.input("augment_both", type=int, default=1,
+    # @cog.input("include_target_in_aug", type=int, default=0)
+    # @cog.input("augment_both", type=int, default=1,
                         help="if you want to apply the affine augmentation to both the sketch and image")
     @cog.input("augmentations", type=str, default="affine",
                         help="can be any combination of: 'affine_noise_eraserchunks_eraser_press'")
     @cog.input("noise_thresh", type=float, default=0.5)
-    @cog.input("aug_scale_min", type=float, default=0.7)
+    # @cog.input("aug_scale_min", type=float, default=0.7)
     @cog.input("force_sparse", type=float, default=0,
                         help="if True, use L1 regularization on stroke's opacity to encourage small number of strokes")
     @cog.input("clip_conv_loss", type=float, default=1)
-    @cog.input("clip_conv_loss_type", type=str, default="L2")
+    # @cog.input("clip_conv_loss_type", type=str, default="L2")
     @cog.input("clip_conv_layer_weights",
                         type=str, default="0,0,1.0,1.0,0")
     @cog.input("clip_model_name", type=str, default="RN101")
@@ -262,11 +262,10 @@ class Predictor(cog.Predictor):
         lr,
         color_lr,
         color_vars_threshold,
-        save_interval,
         eval_interval,
         image_scale,
         num_paths,
-        widths,
+        # width,
         control_points_per_seg,
         num_segments,
         attention_init,
@@ -278,14 +277,14 @@ class Predictor(cog.Predictor):
         clip_weight,
         start_clip,
         num_aug_clip,
-        include_target_in_aug,
-        aug_both,
+        # include_target_in_aug,
+        # aug_both,
         augmentations,
         noise_thresh,
-        aug_scale_min,
+        # aug_scale_min,
         force_sparse,
         clip_conv_loss,
-        clip_conv_loss_type,
+        # clip_conv_loss_type,
         clip_conv_layer_weights,
         clip_fc_loss_weight,
         clip_text_guide,
@@ -372,7 +371,6 @@ class Predictor(cog.Predictor):
                                 losses_dict_eval["fc"].item() / clip_fc_loss_weight
                             )
                             best_iter_fc = epoch
-
                     cur_delta = loss_eval.item() - best_loss
                     if abs(cur_delta) > min_delta:
                         if cur_delta < 0:
