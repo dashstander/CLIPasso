@@ -92,15 +92,15 @@ class CLIPLoss(torch.nn.Module):
             [clip_preprocess.transforms[-1]])  # clip normalisation
         self.device = args.device
         self.NUM_AUGS = args.num_aug_clip
-        augemntations = []
+        augmentations = []
         if "affine" in args.augmentations:
-            augemntations.append(transforms.RandomPerspective(
+            augmentations.append(transforms.RandomPerspective(
                 fill=0, p=1.0, distortion_scale=0.5))
-            augemntations.append(transforms.RandomResizedCrop(
+            augmentations.append(transforms.RandomResizedCrop(
                 224, scale=(0.8, 0.8), ratio=(1.0, 1.0)))
-        augemntations.append(
+        augmentations.append(
             transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)))
-        self.augment_trans = transforms.Compose(augemntations)
+        self.augment_trans = transforms.Compose(augmentations)
 
         self.calc_target = True
         self.include_target_in_aug = args.include_target_in_aug
@@ -152,12 +152,12 @@ class LPIPS(torch.nn.Module):
         # VGG using perceptually-learned weights (LPIPS metric)
         self.normalize = normalize
         self.pretrained = pretrained
-        augemntations = []
-        augemntations.append(transforms.RandomPerspective(
+        augmentations = []
+        augmentations.append(transforms.RandomPerspective(
             fill=0, p=1.0, distortion_scale=0.5))
-        augemntations.append(transforms.RandomResizedCrop(
+        augmentations.append(transforms.RandomResizedCrop(
             224, scale=(0.8, 0.8), ratio=(1.0, 1.0)))
-        self.augment_trans = transforms.Compose(augemntations)
+        self.augment_trans = transforms.Compose(augmentations)
         self.feature_extractor = LPIPS._FeatureExtractor(
             pretrained, pre_relu).to(device)
 
@@ -250,14 +250,14 @@ class L2_(torch.nn.Module):
         """
         super(L2_, self).__init__()
         # VGG using perceptually-learned weights (LPIPS metric)
-        augemntations = []
-        augemntations.append(transforms.RandomPerspective(
+        augmentations = []
+        augmentations.append(transforms.RandomPerspective(
             fill=0, p=1.0, distortion_scale=0.5))
-        augemntations.append(transforms.RandomResizedCrop(
+        augmentations.append(transforms.RandomResizedCrop(
             224, scale=(0.8, 0.8), ratio=(1.0, 1.0)))
-        augemntations.append(
+        augmentations.append(
             transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)))
-        self.augment_trans = transforms.Compose(augemntations)
+        self.augment_trans = transforms.Compose(augmentations)
         # LOG.warning("LPIPS is untested")
 
     def forward(self, pred, target, mode="train"):
@@ -386,15 +386,15 @@ class CLIPConvLoss(torch.nn.Module):
         self.device = args.device
         self.num_augs = self.args.num_aug_clip
 
-        augemntations = []
-        if "affine" in args.augemntations:
-            augemntations.append(transforms.RandomPerspective(
+        augmentations = []
+        if "affine" in args.augmentations:
+            augmentations.append(transforms.RandomPerspective(
                 fill=0, p=1.0, distortion_scale=0.5))
-            augemntations.append(transforms.RandomResizedCrop(
+            augmentations.append(transforms.RandomResizedCrop(
                 224, scale=(0.8, 0.8), ratio=(1.0, 1.0)))
-        augemntations.append(
+        augmentations.append(
             transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)))
-        self.augment_trans = transforms.Compose(augemntations)
+        self.augment_trans = transforms.Compose(augmentations)
 
         self.clip_fc_layer_dims = None  # self.args.clip_fc_layer_dims
         self.clip_conv_layer_dims = None  # self.args.clip_conv_layer_dims
@@ -477,15 +477,15 @@ class CLIPTextLoss(torch.nn.Module):
             [clip_preprocess.transforms[-1]])  # clip normalisation
         self.device = args.device
         self.NUM_AUGS = args.num_aug_clip
-        augemntations = []
-        if "affine" in args.augemntations:
-            augemntations.append(transforms.RandomPerspective(
+        augmentations = []
+        if "affine" in args.augmentations:
+            augmentations.append(transforms.RandomPerspective(
                 fill=0, p=1.0, distortion_scale=0.5))
-            augemntations.append(transforms.RandomResizedCrop(
+            augmentations.append(transforms.RandomResizedCrop(
                 224, scale=(0.8, 0.8), ratio=(1.0, 1.0)))
-        augemntations.append(
+        augmentations.append(
             transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)))
-        self.augment_trans = transforms.Compose(augemntations)
+        self.augment_trans = transforms.Compose(augmentations)
 
         self.include_target_in_aug = args.include_target_in_aug
         self.counter = 0

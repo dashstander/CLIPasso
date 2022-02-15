@@ -45,7 +45,8 @@ class LossConfig:
     include_target_in_aug: int = 0
     augment_both: int = 1
     augmentations: str = 'affine'
-    clip_conv_loss_type: str = ''
+    text_target: str = ''
+    clip_conv_loss_type: str = 'L2'
     clip_model_name: str = 'ViT-B/32'
 
 
@@ -145,12 +146,13 @@ class LossWrapper(Loss):
         include_target_in_aug,
         aug_both,
         augmentations,
+        text_target,
         clip_conv_loss_type
     ):
         config = LossConfig(percep_loss, train_with_clip, clip_weight, start_clip, 
             clip_conv_loss, clip_fc_loss_weight, clip_text_guide, device, 
             clip_conv_layer_weights, num_aug_clip, include_target_in_aug, aug_both, 
-            augmentations, clip_conv_loss_type)
+            augmentations, text_target, clip_conv_loss_type)
         return cls(config)
 
 
@@ -334,7 +336,8 @@ class Predictor(cog.Predictor):
             include_target_in_aug,
             augment_both,
             augmentations,
-            clip_conv_loss_type
+            text_target,
+            clip_conv_loss_type,
         )
         inputs, mask = get_target(
             TargetConfig(device=self.device),
