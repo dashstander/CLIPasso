@@ -137,10 +137,11 @@ class LossWrapper(Loss):
         clip_text_guide,
         device,
         clip_conv_layer_weights,
-        num_aug_clip
-    ):
+        num_aug_clip,
+        augmentations
+        ):
         config = LossConfig(percep_loss, train_with_clip, clip_weight, start_clip, clip_conv_loss, 
-            clip_fc_loss_weight, clip_text_guide, device, clip_conv_layer_weights, num_aug_clip)
+            clip_fc_loss_weight, clip_text_guide, device, clip_conv_layer_weights, num_aug_clip, augmentations)
         return cls(config)
 
 
