@@ -190,7 +190,6 @@ class Predictor(cog.Predictor):
     @cog.input("lr", type=float, default=1.0)
     @cog.input("color_lr", type=float, default=0.01)
     @cog.input("color_vars_threshold", type=float, default=0.0)
-    @cog.input("save_interval", type=int, default=10)
     @cog.input("eval_interval", type=int, default=10)
     @cog.input("image_scale", type=int, default=224)
     # =================================
@@ -235,7 +234,7 @@ class Predictor(cog.Predictor):
     @cog.input("num_aug_clip", type=int, default=4)
     # @cog.input("include_target_in_aug", type=int, default=0)
     # @cog.input("augment_both", type=int, default=1,
-                        help="if you want to apply the affine augmentation to both the sketch and image")
+    #                    help="if you want to apply the affine augmentation to both the sketch and image")
     @cog.input("augmentations", type=str, default="affine",
                         help="can be any combination of: 'affine_noise_eraserchunks_eraser_press'")
     @cog.input("noise_thresh", type=float, default=0.5)
