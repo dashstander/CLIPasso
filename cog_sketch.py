@@ -306,7 +306,7 @@ class Predictor(cog.Predictor):
             num_iter,
             xdog_intersec
         )
-        loss_func = LossWrapper(
+        loss_func = LossWrapper.from_args(
             percep_loss,
             train_with_clip,
             clip_weight,
