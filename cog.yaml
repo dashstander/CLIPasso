@@ -14,8 +14,6 @@ build:
 
     # a list of packages in the format <package-name>==<version>
     python_packages:
-        - "torch==1.9.0"
-        - "torchvision==0.10.0"
         - "cmake==3.21.2"
         - "ftfy==6.0.3"
         - "cssutils==2.3.0"
@@ -72,9 +70,9 @@ build:
         - "zipp==3.5.0"
     
     run:
-        - "git clone https://github.com/BachiLi/diffvg@e5955dbdcb4715ff3fc6cd7d74848a3aad87ec99 && cd diffvg && git submodule update --init --recursive && CMAKE_PREFIX_PATH=$(pyenv prefix) DIFFVG_CUDA=1 python setup.py install"
+        - "git clone https://github.com/BachiLi/diffvg && cd diffvg && git submodule update --init --recursive && CMAKE_PREFIX_PATH=$(pyenv prefix) DIFFVG_CUDA=1 python setup.py install"
         - "pip install git+https://github.com/openai/CLIP.git@main#egg=clip"
         - "python -c 'import torchvision; torchvision.models.vgg16(pretrained=True)'"
-        - "python -c 'import clip; [clip.load(model) for model in ("RN50", "RN101", "RN50x4", "RN50x16", "ViT-B/32", "ViT-B/16",)]'"
+        - python -c 'import clip; [clip.load(model) for model in ("RN50", "RN101", "RN50x4", "RN50x16", "ViT-B/32", "ViT-B/16",)]'
 # predict.py defines how predictions are run on your model
 predict: "cog_sketch.py:Predictor"

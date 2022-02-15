@@ -65,6 +65,7 @@ class PainterConfig:
     text_target: str
     num_iter: int
     xdog_intersec: int = 1
+    width: float = 1.0
     path_svg: str = 'none'
     saliency_model: str = 'clip'
     saliency_clip_model: str = 'ViT-B/32'
@@ -83,6 +84,9 @@ class TargetConfig:
     output_dir: str = 'temp'
     use_gpu: bool = True
 
+    def __post_init__(self):
+        os.makedirs(self.output_dir, exist_ok=True)
+
 
 def load_renderer(args, num_paths, num_segments, image_scale, device, target_im=None, mask=None):
     renderer = Painter(
@@ -98,7 +102,7 @@ def load_renderer(args, num_paths, num_segments, image_scale, device, target_im=
     return renderer
 
 
-def get_target(target, mask_object, fix_scale, image_scale, device):
+def get_target(args, target, mask_object, fix_scale, image_scale, device):
     target = Image.open(target)
     if target.mode == "RGBA":
         # Create a white rgba background
@@ -209,11 +213,11 @@ class Predictor(cog.Predictor):
         type=int,
         default=16,
         help="number of strokes")
-    # @cog.input(
-    #    "width",
-    #    type=float,
-    #    default=1.5,
-    #    help="stroke width")
+    @cog.input(
+       "width",
+       type=float,
+       default=1.5,
+       help="stroke width")
     @cog.input("control_points_per_seg", type=int, default=4)
     @cog.input(
         "num_segments",
@@ -280,7 +284,7 @@ class Predictor(cog.Predictor):
         eval_interval,
         image_scale,
         num_paths,
-        # width,
+        width,
         control_points_per_seg,
         num_segments,
         attention_init,
@@ -320,7 +324,8 @@ class Predictor(cog.Predictor):
             mask_object_attention,
             text_target,
             num_iter,
-            xdog_intersec
+            xdog_intersec,
+            width
         )
         loss_func = LossWrapper.from_args(
             percep_loss,
