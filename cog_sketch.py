@@ -42,6 +42,7 @@ class LossConfig:
     device: str = 'cuda:0'
     clip_conv_layer_weights: str = "0,0,1.0,1.0,0"
     num_aug_clip: int = 4
+    augmentations: str = 'affine'
 
 
 @dataclass
@@ -316,7 +317,8 @@ class Predictor(cog.Predictor):
             clip_text_guide,
             self.device,
             clip_conv_layer_weights,
-            num_aug_clip
+            num_aug_clip,
+            augmentations
         )
         inputs, mask = get_target(
             TargetConfig(device=self.device),
