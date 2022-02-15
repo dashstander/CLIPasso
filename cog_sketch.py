@@ -140,10 +140,14 @@ class LossWrapper(Loss):
         device,
         clip_conv_layer_weights,
         num_aug_clip,
+        include_target_in_aug,
+        aug_both,
         augmentations
-        ):
-        config = LossConfig(percep_loss, train_with_clip, clip_weight, start_clip, clip_conv_loss, 
-            clip_fc_loss_weight, clip_text_guide, device, clip_conv_layer_weights, num_aug_clip, augmentations)
+    ):
+        config = LossConfig(percep_loss, train_with_clip, clip_weight, start_clip, 
+            clip_conv_loss, clip_fc_loss_weight, clip_text_guide, device, 
+            clip_conv_layer_weights, num_aug_clip, include_target_in_aug, aug_both, 
+            augmentations)
         return cls(config)
 
 
@@ -324,6 +328,8 @@ class Predictor(cog.Predictor):
             self.device,
             clip_conv_layer_weights,
             num_aug_clip,
+            include_target_in_aug,
+            aug_both,
             augmentations
         )
         inputs, mask = get_target(
