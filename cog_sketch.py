@@ -165,10 +165,6 @@ class Predictor(cog.Predictor):
     # ============ general ============
     # =================================
     @cog.input("target", type=Path, help="target image path")
-    @cog.input(
-        "output_dir",
-        type=str,
-        help="directory to save the output images and loss")
     @cog.input("seed", type=int, default=0)
     @cog.input("mask_object", type=int, default=0)
     @cog.input("fix_scale", type=int, default=0)
@@ -235,24 +231,28 @@ class Predictor(cog.Predictor):
     # @cog.input("include_target_in_aug", type=int, default=0)
     # @cog.input("augment_both", type=int, default=1,
     #                    help="if you want to apply the affine augmentation to both the sketch and image")
-    @cog.input("augmentations", type=str, default="affine",
-                        help="can be any combination of: 'affine_noise_eraserchunks_eraser_press'")
+    @cog.input(
+        "augmentations",
+        type=str,
+        default="affine",
+        help="can be any combination of: 'affine_noise_eraserchunks_eraser_press'")
     @cog.input("noise_thresh", type=float, default=0.5)
     # @cog.input("aug_scale_min", type=float, default=0.7)
-    @cog.input("force_sparse", type=float, default=0,
-                        help="if True, use L1 regularization on stroke's opacity to encourage small number of strokes")
+    @cog.input(
+        "force_sparse",
+        type=float,
+        default=0,
+        help="if True, use L1 regularization on stroke's opacity to encourage small number of strokes")
     @cog.input("clip_conv_loss", type=float, default=1)
     # @cog.input("clip_conv_loss_type", type=str, default="L2")
     @cog.input("clip_conv_layer_weights",
                         type=str, default="0,0,1.0,1.0,0")
-    @cog.input("clip_model_name", type=str, default="RN101")
     @cog.input("clip_fc_loss_weight", type=float, default=0.1)
     @cog.input("clip_text_guide", type=float, default=0)
     @cog.input("text_target", type=str, default="none")
     def predict(
         self,
         target,
-        output_dir,
         seed,
         mask_object,
         fix_scale,
@@ -376,13 +376,13 @@ class Predictor(cog.Predictor):
                             best_loss = loss_eval.item()
                             best_iter = epoch
                             terminate = False
-                            renderer.save_svg(output_dir, "best_iter")
+                            renderer.save_svg("best_iter")
                     if abs(cur_delta) <= min_delta:
                         if terminate:
                             break
                         terminate = True
             counter += 1
         # renderer.save_svg(output_dir, "final_svg")
-        path_svg = os.path.join(output_dir, "best_iter.svg")
+        path_svg = "best_iter.svg"
         return Path(path_svg)
 
