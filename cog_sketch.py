@@ -310,6 +310,7 @@ class Predictor(cog.Predictor):
         text_target
     ):
         """Run a single prediction on the model"""
+        # TODO: the target image is just a path! Need to load it in!
         self.set_seed(seed)
         painter_config = PainterConfig(
             control_points_per_seg,
@@ -358,6 +359,7 @@ class Predictor(cog.Predictor):
             num_segments,
             image_scale,
             self.device,
+            target_im=inputs,
             mask=mask
         )
         optimizer = PainterOptimizer(OptimizerConfig(lr, color_lr, force_sparse), renderer)
