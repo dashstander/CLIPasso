@@ -288,7 +288,7 @@ class Predictor(cog.Predictor):
         start_clip,
         num_aug_clip,
         include_target_in_aug,
-        aug_both,
+        augment_both,
         augmentations,
         noise_thresh,
         # aug_scale_min,
@@ -329,7 +329,7 @@ class Predictor(cog.Predictor):
             clip_conv_layer_weights,
             num_aug_clip,
             include_target_in_aug,
-            aug_both,
+            augment_both,
             augmentations
         )
         inputs, mask = get_target(
