@@ -28,6 +28,7 @@ import PIL
 from PIL import Image
 from models.loss import Loss
 from models.painter_params import Painter, PainterOptimizer
+from typing import Tuple
 
 
 @dataclass
@@ -40,7 +41,6 @@ class LossConfig:
     clip_fc_loss_weight: float = 0.1
     clip_text_guide: float = 0.0
     device: str = 'cuda:0'
-    clip_conv_layer_weights: str = '0,0,1.0,1.0,0'
     num_aug_clip: int = 4
     include_target_in_aug: int = 0
     augment_both: int = 1
@@ -48,6 +48,7 @@ class LossConfig:
     text_target: str = ''
     clip_conv_loss_type: str = 'L2'
     clip_model_name: str = 'ViT-B/32'
+    clip_conv_layer_weights: Tuple[float] = (0., 0., 1.0, 1.0, 0.)
 
 
 @dataclass
@@ -146,7 +147,6 @@ class LossWrapper(Loss):
         clip_fc_loss_weight, 
         clip_text_guide,
         device,
-        clip_conv_layer_weights,
         num_aug_clip,
         include_target_in_aug,
         aug_both,
@@ -155,8 +155,8 @@ class LossWrapper(Loss):
         clip_conv_loss_type
     ):
         config = LossConfig(percep_loss, train_with_clip, clip_weight, start_clip, 
-            clip_conv_loss, clip_fc_loss_weight, clip_text_guide, device, 
-            clip_conv_layer_weights, num_aug_clip, include_target_in_aug, aug_both, 
+            clip_conv_loss, clip_fc_loss_weight, clip_text_guide, device, num_aug_clip, 
+            include_target_in_aug, aug_both, 
             augmentations, text_target, clip_conv_loss_type)
         return cls(config)
 
@@ -266,8 +266,6 @@ class Predictor(cog.Predictor):
         help="if True, use L1 regularization on stroke's opacity to encourage small number of strokes")
     @cog.input("clip_conv_loss", type=float, default=1)
     @cog.input("clip_conv_loss_type", type=str, default="L2", options=["L2", "Cos", "L1"])
-    @cog.input("clip_conv_layer_weights",
-                        type=str, default="0,0,1.0,1.0,0")
     @cog.input("clip_fc_loss_weight", type=float, default=0.1)
     @cog.input("clip_text_guide", type=float, default=0)
     @cog.input("text_target", type=str, default="none")
@@ -305,7 +303,6 @@ class Predictor(cog.Predictor):
         force_sparse,
         clip_conv_loss,
         clip_conv_loss_type,
-        clip_conv_layer_weights,
         clip_fc_loss_weight,
         clip_text_guide,
         text_target
@@ -338,7 +335,6 @@ class Predictor(cog.Predictor):
             clip_fc_loss_weight, 
             clip_text_guide,
             self.device,
-            clip_conv_layer_weights,
             num_aug_clip,
             include_target_in_aug,
             augment_both,
